@@ -1,21 +1,25 @@
 import express, { Application, json, Request, Response } from "express";
-import { createProduct, deleteProduct, readProduct, readProductId } from "./logics";
+import {
+  createProduct,
+  deleteProduct,
+  patchProduct,
+  readProduct,
+  readProductId,
+} from "./logics";
+import { checkProductExists, findProductId, filterProductSection, validateProductCreation } from "./middlewares";
 
 const app: Application = express();
 app.use(json());
 
-app.get("/products",readProduct);
+app.get("/products",filterProductSection  ,readProduct);
 
-app.post("/products",createProduct);
+app.post("/products",validateProductCreation,checkProductExists,createProduct);
 
-app.get("/products/:id",readProductId);
+app.get("/products/:id", findProductId, readProductId);
 
-app.patch("/products/:id" /* Callback */);
+app.patch("/products/:id", findProductId,patchProduct);
 
-app.delete(
-  "/products/:id",
-  deleteProduct
-);
+app.delete("/products/:id",findProductId, deleteProduct);
 
 const PORT: number = 3000;
 const runningMsg: string = `Server running in http://localhost:${PORT}`;
