@@ -6,7 +6,7 @@ import {
   readProduct,
   readProductId,
 } from "./logics";
-import { checkProductExists, findProductId, filterProductSection, validateProductCreation } from "./middlewares";
+import { checkProductExists, findProductId, filterProductSection, validateProductCreation, checkNameExists } from "./middlewares";
 
 const app: Application = express();
 app.use(json());
@@ -16,8 +16,8 @@ app.get("/products",filterProductSection  ,readProduct);
 app.post("/products",validateProductCreation,checkProductExists,createProduct);
 
 app.get("/products/:id", findProductId, readProductId);
-
-app.patch("/products/:id", findProductId,patchProduct);
+ 
+app.patch("/products/:id", findProductId,checkNameExists,patchProduct);
 
 app.delete("/products/:id",findProductId, deleteProduct);
 

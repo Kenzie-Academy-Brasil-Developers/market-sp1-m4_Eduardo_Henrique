@@ -9,7 +9,7 @@ export const findProductId = (
 ): Response | void => {
   const id = request.params.id;
 
-  const findProduct = market.find((product) => product.id === parseInt(id));
+  const findProduct = market.find((product) => product.id === Number(id));
   if (!findProduct) {
     return response.status(404).json({ error: "Product not found" });
   }
@@ -57,6 +57,20 @@ export const checkProductExists = (
   return next();
 };
 
+export const checkNameExists = (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  const { name } = request.body;
+  const existingProduct = market.find((product) => product.name === name);
+  if (existingProduct) {
+    return response.status(409).json({ error: "Product already exists" });
+  } else {
+    return next();
+  }
+};
+
 export const filterProductSection = (
   request: Request,
   response: Response,
@@ -64,7 +78,6 @@ export const filterProductSection = (
 ) => {
   const sectionProduct: any = request.query.section;
   if (sectionProduct) {
-    console.log(sectionProduct);
     if (sectionProduct !== "food" && sectionProduct !== "cleaning") {
       return response.status(404).json({ error: "section not found" });
     }
