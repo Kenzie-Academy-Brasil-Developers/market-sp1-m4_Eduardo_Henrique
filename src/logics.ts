@@ -54,7 +54,7 @@ export const createProduct = (
     const totalCart = acc + product.price;
     return Number(totalCart);
   }, 0);
-  return response.status(201).json({ total: `${total}`, marketProducts });
+  return response.status(201).json({  total: total, marketProducts });
 };
 
 export const patchProduct = (
