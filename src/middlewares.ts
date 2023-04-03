@@ -70,7 +70,27 @@ export const checkNameExists = (
     return next();
   }
 };
+export function preventUpdates(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const product: IProduct = req.body;
+  if (
+    product.id !== undefined ||
+    product.expirationDate !== undefined
+  ) {
+    res
+      .status(400)
+      .json({
+        message:
+          "You are not allowed to update id or expirationData.",
+      });
+    return;
+  }
 
+  next();
+}
 export const filterProductSection = (
   request: Request,
   response: Response,

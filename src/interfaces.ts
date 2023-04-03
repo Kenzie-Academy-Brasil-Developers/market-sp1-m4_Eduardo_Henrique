@@ -5,7 +5,7 @@ export interface IProduct {
   price: number;
   weight: number;
   section: ProductSection;
-  expirationData: Date;
+  expirationDate: Date;
 }
 
 export interface ICleaningProduct extends IProduct {}
@@ -20,6 +20,6 @@ export interface IUpdateProduct {
   section?: ProductSection;
   calories?: number;
 }
-type IRequestCleaningProduct = Omit<ICleaningProduct, "id" | "expirationData">;
-type IRequestFoodProduct = Omit<ICleaningProduct, "id" | "expirationData">;
+type IRequestCleaningProduct = Omit<ICleaningProduct, "id" | "expirationDate">;
+type IRequestFoodProduct = Omit<ICleaningProduct, "id" | "expirationDate">;
 export type INewProduct = IRequestCleaningProduct | IRequestFoodProduct;

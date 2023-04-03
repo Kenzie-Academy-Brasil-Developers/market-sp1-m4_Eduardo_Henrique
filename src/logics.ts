@@ -37,13 +37,13 @@ export const createProduct = (
   const expirationData = new Date();
 
   expirationData.setFullYear(expirationData.getFullYear() + 1);
-  
+
   const marketProducts = productsBody.map((product) => {
     const newProduct: IProduct = {
       id: market.length
-        ? Math.max(...market.map((product) => product.id)) + 1
-        : 1,
-      expirationData: expirationData,
+      ? Math.max(...market.map((product) => product.id)) + 1
+      : 1,
+      expirationDate: expirationData,
       ...product,
     };
     market.push(newProduct);
@@ -51,7 +51,7 @@ export const createProduct = (
   });
 
   const total: number = marketProducts.reduce((acc, product) => {
-    const totalCart = acc + product.price
+    const totalCart = acc + product.price;
     return Number(totalCart);
   }, 0);
   return response.status(201).json({ total: `${total}`, marketProducts });
